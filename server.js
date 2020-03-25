@@ -1,20 +1,41 @@
+/**
+ * PROJECT: CS313 FINAL - YOWL
+ * DESCRIPTION: A nodejs chat app that allows multiple users to connect.
+ * 
+ * FILE: server.js
+ *  This is the entry point of the app
+ * 
+ * Author: Adam Tipton
+ * Date: 3/12/2020
+ * Version: 1
+ */
 var express = require('express');
 const socketIO = require('socket.io');
 const INDEX = 'public/index.html';
 const path = require('path');
+const { Pool } = require('pg');
+//const favicon = require('serve-favicon');
+
+//DATABASE URL
+const connectionString = process.env.DATABASE_URL;
 
 //Session
 const session = require('express-session');
 var sess;
 var FileStore = require('session-file-store')(session);
 
+//Hash
+const bcrypt = require('bcrypt'); //Works great
 
-
-var PORT = process.env.PORT || 3000;
+//Important Variables
+var PORT = process.env.PORT || 5000;
+const pool = new Pool({ connectionString: connectionString});
 
 const server = express()
   .use(express.static(path.join(__dirname, 'public')))
   //.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  //favicon
+  //.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
   //Use session storage
   .use(session({
     store: new FileStore(),
@@ -143,8 +164,12 @@ const server = express()
     
 
 
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
-
+  //.listen(PORT, () => console.log(`Listening on ${PORT}`));
+//This is our port. It is the gatekeeper, allowing us to connect to the world and the world to us. 
+.listen(PORT,()=> {
+    console.log('Starten up, da shield!');
+    console.log('Shield generator up on port ' + PORT + '. Listening!');
+});
 
 const io = socketIO(server);
 
