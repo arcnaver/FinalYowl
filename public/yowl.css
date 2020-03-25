@@ -1,0 +1,173 @@
+/**
+ * PROJECT: CS313 FINAL - YOWL
+ * DESCRIPTION: A nodejs chat app that allows multiple users to connect.
+ * 
+ * FILE: yowl.css
+ *  This will contain all the pretties for the pages.
+ * 
+ * Author: Adam Tipton
+ * Date: 3/12/2020
+ * Version: 1
+ */
+
+ /* HEADER */
+ .header {
+    color: red;
+}
+
+/* COLUMNS */
+* {
+   box-sizing: border-box;
+ }
+
+ .input_zone {
+   display: table-cell;
+   height: 200px;
+ }
+ 
+ /* Create two equal columns that floats next to each other */
+ .message_column {    
+   float: left;
+   width: 70%;
+   padding: 10px;
+   
+ }  
+ .connection_column {
+   float: left;
+   width: 30%;
+   padding: 10px;
+   
+ } 
+ /* Clear floats after the columns */
+ .row:after {
+   content: "";
+   display: table;
+   clear: both;
+ }
+
+ /* USERS AND CONNECT MESSAGES */
+ p, #connect_message  {
+   color: blue;
+   font-weight: bolder;
+   font-size: 24px;
+ }
+
+ p, #connected_peeps {
+   color: green;
+   font-weight: bolder;
+   font-size: 24px;
+ }
+
+ /* HEADER STUFF */
+ .header {
+   background-color: #333;
+ }
+
+ #icon {
+   margin-top: 10px;
+ }
+ #yowl_title {
+   font-family: Comic Sans MS;
+   font-size: 72px;
+ }
+
+ /* INPUT ZONE */
+ /* Keep the thing at the bottom!! */
+ .input_zone {
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+ }
+
+ /* LOGIN STUFF */
+ #password {
+   margin-top: 2px;
+   margin-left: 3px;
+   margin-bottom: 2px;
+   border-radius: 20px;
+ }
+
+ #new_password {
+   margin-top: 2px;
+   margin-left: 10px;
+   margin-bottom: 2px;
+   border-radius: 20px;
+ }
+
+ #user_name {
+   border-radius: 20px;
+ }
+
+ #first_name {
+   border-radius: 20px;
+ }
+
+ #new_user_name {
+   margin-top: 2px;
+   margin-left: 7px;
+   margin-bottom: 2px;
+   border-radius: 20px;
+ }
+
+ #last_name {
+   margin-top: 2px;
+   margin-left: 2px;
+   margin-bottom: 2px;
+   border-radius: 20px;
+ }
+
+ #getLogin {
+   margin-left: 125px;
+   margin-right: 5px;
+   margin-top: 5px;
+ }
+
+ #signUp {
+   margin-left: 125px;
+   margin-right: 5px;
+   margin-top: 5px;
+ }
+
+ .p_login {
+   color: black;
+   font-size: large;
+ }
+ #error {
+   color: red;
+   font-size: large;
+ }
+
+ /* Message Input */
+ .input_zone {
+   visibility: hidden;
+ }
+ #message_lable {
+   font-size: larger;
+ }
+ #message_input {
+   width: 65%;
+   border-radius: 20px;
+ }
+
+ /* BUTTON STYLE */
+ button {
+   border-radius: 12px;
+   color: white;
+   background-color: #333;
+   cursor: pointer;
+   padding: 5px;
+ }
+
+ /* SOCKET IO */
+ #messages { 
+   list-style-type: none; margin: 0; padding: 0; 
+  }
+ #messages li { 
+   padding: 5px 10px; 
+  }
+ #messages li:nth-child(odd) { 
+   background: #eee; 
+  }
+ #messages {
+   margin-bottom: 40px 
+  }
