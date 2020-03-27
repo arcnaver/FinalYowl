@@ -16,11 +16,13 @@ $(document).ready(function(){
                    $("#error").text("Username doesn't exist. Please try again.");
                    $("#user_name").val("");
                    $("#password").val("");
-                }else{
+                }else{                                       
                      //Get rid of the login forms
                      $("#login_form").remove();
                      //Show connections column
-                     $("#current_users").text("Connected Users");
+                     $("#current_users").text("Connected Users Yo");
+                     //Change text in message column from Login to Messages
+                     $("#message_pane").text("Messages");
                      //Show the username
                      $("#connected_peeps").append('\n');
                      $("#connected_peeps").append(res);   
@@ -30,6 +32,7 @@ $(document).ready(function(){
                      $("#connect_message").append('<img src="favicon-32x32.png" alt="favicon"> ' + res + ' has connected.'); 
                      //Cause the input zone to appear, like magic
                      $(".input_zone").css("visibility", "visible");
+                     
                 }              
             }
         });

@@ -9,6 +9,7 @@
  * Date: 3/12/2020
  * Version: 1
  */
+require('dotenv').config();
 var express = require('express');
 const socketIO = require('socket.io');
 const INDEX = 'public/index.html';
@@ -82,15 +83,15 @@ const server = express()
       //console.log("password: " + hashed_password);
       console.log("First name: " + first_name);
       console.log("Last Name: " + last_name);
-
       bcrypt.hash(password, 10, function(err, hash) {
+          console.log("hash is: " + hash);
           // Store hash in your password DB.
           //Insert new credentials string   
           var insert_cred = 'INSERT INTO yowl.login_prof_credentials(user_name, user_password, first_name, last_name) VALUES(' + '\'' + user_name + '\'' 
           + ',' + '\'' + hash + '\'' + ',' + '\'' + first_name + '\'' + ',' + '\'' + last_name + '\'' + ')';
-      
-          //Query the db
-          pool.query(insert_cred, (err, result)=>{
+         console.log('Getting ready to query db');
+          //Query the db     
+            pool.query(insert_cred, (err, result)=>{
               if(err){
                   return console.error(err);
               } else {              
@@ -123,7 +124,7 @@ const server = express()
 
       pool.query('SELECT user_name, user_password FROM yowl.login_prof_credentials WHERE user_name = ' + '\'' + user_name + '\'',(err, result)=>{
       //pool.query('SELECT user_name, user_password FROM yowl.login_prof_credentials WHERE user_name = :userName',(err, result)=>{
-          
+          //console.log(result.rows[0].user_name);
           
           //If it passes null back send nameerr
           if(result.rows[0] == null){
@@ -148,8 +149,11 @@ const server = express()
                       
                       //Store username in session
                       sess.username = result.rows[0].user_name;
+                     
+                      console.log("Session Username is: " + sess.username);
                       //We just want the user_name in this case, which is all that should've been grabbed anyways. 
-                      res.json(result.rows[0].user_name);
+                      //res.json(result.rows[0].user_name);
+                      res.send(sess.username);
                   } else {
                       res.send("pw");
                       console.log("They don't match fool!");
@@ -173,7 +177,7 @@ const server = express()
 
 const io = socketIO(server);
 
-io.on('connection', (socket) => {
+io.on('connection', (socket) => {  
   console.log('Client connected');
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
@@ -183,9 +187,18 @@ io.on('connection', (socket) => {
 //     io.emit('chat message', msg);    
 //   });  
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    var out = "Bob: " + msg;
-    io.emit('chat message', out);    
+  socket.on('chat message', function(msg){    
+    var msg = " " + msg.msg;
+    var date = new Date();
+    var hours = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+    var time = hours + ":" + min + ":" + sec;
+    var out = {id: sess.username, message: msg, time: time};
+    io.emit('chat message', out);
+    
+    //io.emit('chat message', out);
+       
     console.log(out);
   }); 
   

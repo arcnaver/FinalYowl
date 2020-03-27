@@ -26,15 +26,18 @@
             <!-- All the message stuff goes here -->
             <h1 id="message_pane">Login</h1>
             
-            <!-- This is where we print messages -->
+            <!-- This is where we print messages -->           
             <p id="connect_message"></p>
-            <ul id="messages"></ul>
+            <!-- <ul id="messagess"></ul> -->
+            <div id="messages"></div>
+
+
             <div id="login_form">
 
                 <!-- Login -->
                 <p class="p_login">Current acount? Please login:</p>
                 <p id="error"></p>
-                
+                                
                 <label for="user_name">Username:</label>
                     <input type="text" id="user_name" name="user_name"></br>
                     <label for="password">Password:</label>                    
@@ -87,7 +90,7 @@
         </div>
     </div>
     <p id="user_name"></p>
-    <div class="input_zonea">
+    <div class="input_zone">
         <hr>
         <!-- All of the input stuff goes here -->
         <h1>Message Handler</h1>  
@@ -96,7 +99,7 @@
             <input type="text" id="message_input">  
             <button id="enterBtn">Yowl</button> 
         </form>
-           
+       
     </div>        
     <!-- Socket IO -->
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -108,11 +111,7 @@
             let user_name = "bob";
             
             //Tiem from https://tecadmin.net/get-current-date-time-javascript/
-            var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            var localSysTime = date +' '+ time;
-
+            
             // socket.on('time', (timeString) => {
             //     el = document.getElementById('server-time');
             //     el.innerHTML = 'Server time: ' + timeString;
@@ -121,19 +120,33 @@
 
             $(function () {
                 var socket = io();
+                //Send the message out
                 $('form').submit(function(){
-                    var message = $('#message_input').val();
-                    var pass = localSysTime + ': ' + message;
+                    var message = $('#message_input').val();                    
+                    var pass = {msg: message};
                     //socket.emit('chat message', $('#message_input').val());
                     socket.emit('chat message', pass);                   
                    
                 $('#message_input').val('');
                     return false;
                 }); 
+                //Message inbound
                 socket.on('chat message', function(msg){
-                    $('#messages').append($('<li>').text(msg));
+                    var id = msg.id + ": ";
+                    var message = msg.message;
+                    var time = " - " + msg.time;
+                    
+                    //Get the message and put it on the board
+                    $('#messages').append($('<span id="chat_name">').text(id), $('<span id="chat_message"></br>').text(message)
+                        , $('<span id="chat_time">').text(time), ($('</br>')));
+                    //$('#messages').append($('</br>'));      
                     window.scrollTo(0, document.body.scrollHeight);
                     
+                });
+
+                //ON connect pass the username.
+                socket.on('connection', function(msg){
+                    $('#messages').append($('<li style="color: red;">').text(id));
                 });
                 // socket.on('chat message', function(msg){
                 //     var msg = msg.msg;
