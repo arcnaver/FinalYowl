@@ -110,27 +110,21 @@
         <script>
             let socket = io();
             let el;
-            let user_name = "bob";
-            
-            //Tiem from https://tecadmin.net/get-current-date-time-javascript/
-            
-            // socket.on('time', (timeString) => {
-            //     el = document.getElementById('server-time');
-            //     el.innerHTML = 'Server time: ' + timeString;
-            // });
-     
-
+            var connected = false;
+            var stored_user; 
+            //Functions
             $(function () {
-                var socket = io();
+                var socket = io(); 
+                
                 //Send the message out
                 $('form').submit(function(){
                     var message = $('#message_input').val();   
-                    var stored_user = $('#stored_user').text(); 
-                                  
+                    stored_user = $('#stored_user').text(); 
+                         
                     var pass = {msg: message, id: stored_user};
                     //socket.emit('chat message', $('#message_input').val());
                     socket.emit('chat message', pass);                   
-                   
+                //Clear the input   
                 $('#message_input').val('');
                     return false;
                 }); 
@@ -139,6 +133,14 @@
                     var id = msg.id + ": ";
                     var message = msg.message;
                     var time = " - " + msg.time;
+                    var audio = new Audio('yowl-short.wav');
+                    
+                    //Compare message id to see if its mine, if not put it in connections
+                    if (msg.id != stored_user) {
+                        $("#connected_peeps").append('</br>' + msg.id); 
+                        //play cute sound https://freesound.org/s/448084/
+                        audio.play();
+                    }
                     
                     //Get the message and put it on the board
                     $('#messages').append($('<span id="chat_name">').text(id), $('<span id="chat_message"></br>').text(message)
@@ -148,18 +150,10 @@
                     
                 });
 
-                //ON connect pass the username.
-                socket.on('connection', function(msg){
-                    $('#messages').append($('<li style="color: red;">').text(id));
-                });
-                // socket.on('chat message', function(msg){
-                //     var msg = msg.msg;
-                //     var name = msg.name;
-                //     $('#messages').append($('<li>').text(msg));
-                //     window.scrollTo(0, document.body.scrollHeight);
-                // });
+                             
             });
 
+            
         </script>
 </body>
 </html>

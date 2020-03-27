@@ -23,6 +23,7 @@ const connectionString = process.env.DATABASE_URL;
 //Session
 const session = require('express-session');
 var sess;
+var x;
 //var FileStore = require('session-file-store')(session);
 
 //Hash
@@ -153,7 +154,7 @@ const server = express()
                       console.log("Session Username is: " + sess.username);
                       //We just want the user_name in this case, which is all that should've been grabbed anyways. 
                       //res.json(result.rows[0].user_name);
-                      res.send(sess.username);
+                      res.send(sess.username);                      
                   } else {
                       res.send("pw");
                       console.log("They don't match fool!");
@@ -177,35 +178,52 @@ const server = express()
 
 const io = socketIO(server);
 
+//The username we want
+var name;
 
-
+//On connect
 io.on('connection', (socket) => {  
-  console.log('Client connected');
+  console.log('Client connected');  
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
- 
+
 io.on('connection', function(socket){
+  
   socket.on('chat message', function(msg){   
     //Socket.io storage
     socket.username = sess.username;
-    var name = msg.id;
+    name = msg.id;
     
     console.log("Passed name from chat: " + name);
     var msg = " " + msg.msg;
+
+    //Time
     var date = new Date();
     var hours = date.getHours();
     var min = date.getMinutes();
     var sec = date.getSeconds();
     var time = hours + ":" + min + ":" + sec;
+
+    console.log("Socket username is: " + socket.username)   
+    console.log(out);
+
+    //Message
     var out = {id: name, message: msg, time: time};
     io.emit('chat message', out);
     
-    //io.emit('chat message', out);
-    console.log("Socket username is: " + socket.username)   
-    console.log(out);
-  }); 
+    
+    
+  });  
+  
+  socket.on('user', function(data){
+    console.log("User: " + data);
+  })
+  
+
   
 });
+
+ 
 
 // setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 
