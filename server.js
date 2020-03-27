@@ -23,7 +23,7 @@ const connectionString = process.env.DATABASE_URL;
 //Session
 const session = require('express-session');
 var sess;
-var FileStore = require('session-file-store')(session);
+//var FileStore = require('session-file-store')(session);
 
 //Hash
 const bcrypt = require('bcrypt'); //Works great
@@ -39,7 +39,7 @@ const server = express()
   //.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
   //Use session storage
   .use(session({
-    store: new FileStore(),
+    //store: new FileStore(),
     secret: 'somethingsecure',
     resave: true,
     saveUninitialized: true
@@ -177,6 +177,8 @@ const server = express()
 
 const io = socketIO(server);
 
+
+
 io.on('connection', (socket) => {  
   console.log('Client connected');
   socket.on('disconnect', () => console.log('Client disconnected'));
@@ -187,18 +189,22 @@ io.on('connection', (socket) => {
 //     io.emit('chat message', msg);    
 //   });  
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){    
+  socket.on('chat message', function(msg){   
+    //Socket.io storage
+    socket.username = sess.username;
+    var name = msg.name;
+    console.log("passed name: " + name);
     var msg = " " + msg.msg;
     var date = new Date();
     var hours = date.getHours();
     var min = date.getMinutes();
     var sec = date.getSeconds();
     var time = hours + ":" + min + ":" + sec;
-    var out = {id: sess.username, message: msg, time: time};
+    var out = {id: socket.username, message: msg, time: time};
     io.emit('chat message', out);
     
     //io.emit('chat message', out);
-       
+    console.log("Socket username is: " + socket.username)   
     console.log(out);
   }); 
   

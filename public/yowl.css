@@ -58,6 +58,10 @@
    font-size: 24px;
  }
 
+ /* #stored_user {
+   visibility: hidden;
+ } */
+
  /* HEADER STUFF */
  .header {
    background-color: #333;

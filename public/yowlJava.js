@@ -23,7 +23,8 @@ $(document).ready(function(){
                      $("#current_users").text("Connected Users");
                      //Show the username
                      $("#connected_peeps").append('\n');
-                     $("#connected_peeps").append(res);   
+                     $("#connected_peeps").append(res); 
+                     $("#stored_user").append(res);   
                      
                      //Connection msg
                      $("#connect_message").append('\n');
