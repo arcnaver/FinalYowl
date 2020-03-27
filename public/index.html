@@ -26,10 +26,10 @@
             <!-- All the message stuff goes here -->
             <h1 id="message_pane">Login</h1>
             <!-- Secret hiding place for the username, shhhh -->
-            <span id="stored_user"></span>
+            <span id="stored_user"></span></br>
             <!-- This is where we print messages -->           
             <span id="connect_message"></span>
-            <span id="stored_user"></span>
+            
             <!-- <ul id="messagess"></ul> -->
             <div id="messages"></div>
 
@@ -124,8 +124,10 @@
                 var socket = io();
                 //Send the message out
                 $('form').submit(function(){
-                    var message = $('#message_input').val();                    
-                    var pass = {msg: message};
+                    var message = $('#message_input').val();   
+                    var stored_user = $('#stored_user').text(); 
+                                  
+                    var pass = {msg: message, id: stored_user};
                     //socket.emit('chat message', $('#message_input').val());
                     socket.emit('chat message', pass);                   
                    

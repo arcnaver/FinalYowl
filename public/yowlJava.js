@@ -17,20 +17,23 @@ $(document).ready(function(){
                    $("#user_name").val("");
                    $("#password").val("");
                 }else{
-                     //Get rid of the login forms
-                     $("#login_form").remove();
-                     //Show connections column
-                     $("#current_users").text("Connected Users");
-                     //Show the username
-                     $("#connected_peeps").append('\n');
-                     $("#connected_peeps").append(res); 
-                     $("#stored_user").append(res);   
-                     
-                     //Connection msg
-                     $("#connect_message").append('\n');
-                     $("#connect_message").append('<img src="favicon-32x32.png" alt="favicon"> ' + res + ' has connected.'); 
-                     //Cause the input zone to appear, like magic
-                     $(".input_zone").css("visibility", "visible");
+                    //Change the name of the message_pane
+                    $("#message_pane").text("Messages");
+                    //Get rid of the login forms
+                    $("#login_form").remove();
+                    //Show connections column
+                    $("#current_users").text("Connected Users");
+                    //Show the username
+                    $("#connected_peeps").append('\n');
+                    $("#connected_peeps").append(res); 
+                    //Incase sessions break, store username here
+                    $("#stored_user").append(res);   
+                    
+                    //Connection msg
+                    $("#connect_message").append('\n');
+                    $("#connect_message").append('<img src="favicon-32x32.png" alt="favicon"> ' + res + ' has connected.'); 
+                    //Cause the input zone to appear, like magic
+                    $(".input_zone").css("visibility", "visible");
                 }              
             }
         });
