@@ -184,7 +184,9 @@ var name;
 //On connect
 io.on('connection', (socket) => {  
   console.log('Client connected');  
-  socket.on('disconnect', () => console.log('Client disconnected'));
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
 });
 
 io.on('connection', function(socket){
