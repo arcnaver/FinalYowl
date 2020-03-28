@@ -168,18 +168,6 @@
                     //If they're the same its true, else its false
                     var sameId = compareId(msg.id, stored_user);
 
-                    //Compare message id to see if its mine, if not put it in connections
-                    // if (msg.id != stored_user) {
-                    //     console.log("msgid: " + msg.id + " stored: " + stored_user);
-                    //     $("#connected_peeps").append('</br>' + msg.id); 
-                    //     //play cute sound https://freesound.org/s/448084/
-                    //     new_message_audio.play();
-
-                    // } else if (msg.id == stored_user) {
-                    //     console.log("They equal");
-                    // }
-
-
                     //Check clients and put them on the Connect Users column
                     putUserInArray(msg.id);
 
