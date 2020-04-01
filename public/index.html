@@ -22,7 +22,7 @@
     <div id="future"></div>
     <div class="row">
         <div class="message_column">
-            <table class="table_m_pane"></table>
+            
             <!-- All the message stuff goes here -->
             <h1 id="message_pane">Login</h1>
             <!-- Secret hiding place for the username, shhhh -->
@@ -30,9 +30,11 @@
             <!-- This is where we print messages -->           
             <span id="connect_message"></span>
             
-            <!-- <ul id="messagess"></ul> -->
-            <div id="messages"></div>
-
+            <!-- Message Division -->
+            <div id="messages">
+                <div id="anchor"></div>
+            </div>
+                
 
             <div id="login_form">
 
@@ -126,19 +128,25 @@
                 $('form').submit(function(){
                     var message = $('#message_input').val();   
                     stored_user = $('#stored_user').text(); 
-                         
+                    
+                     //Scroll                     
+                    $("#messages").scrollTop($("#messages")[0].scrollHeight);
                     var pass = {msg: message, id: stored_user};
+                    //Weird, I have to have this too
+                    $display = $('#messages');
+                    $display.animate({ scrollTop: $display[0].scrollHeight }, 'fast');                        
                     //socket.emit('chat message', $('#message_input').val());
                     socket.emit('chat message', pass);                   
-                //Clear the input   
-                $('#message_input').val('');
-                    return false;
+                    //Clear the input   
+                    $('#message_input').val('');
+                        return false;
+
+                    
                 }); 
                 //Message inbound
                 socket.on('chat message', function(msg){
                     stored_user = $('#stored_user').text();
-                    console.log("Stored: " + stored_user);
-                    console.log("message id " + msg.id);
+                    
                     var id = msg.id + ": ";
                     var message = msg.message;
                     var time = " - " + msg.time;
@@ -151,9 +159,7 @@
                         putStoredUserInArray(stored_user);
                     };
                     
-                    //Check if new user id is in array
-
-
+                    
                     //check the incoming message id with stored_user id for same value
                     //If they're the same its true, else its false
                     var sameId = compareId(msg.id, stored_user);
@@ -161,15 +167,17 @@
                     //Check clients and put them on the Connect Users column
                     putUserInArray(msg.id);
 
-                    console.log("Getting ready to put message out");
+                    
                     //Get the message and put it on the board
                     $('#messages').append($('<span id="chat_name">').text(id), $('<span id="chat_message"></br>').text(message)
                         , $('<span id="chat_time">').text(time), ($('</br>')));
                     //play cute sound https://freesound.org/s/448084/
                     new_message_audio.play();
-                    //$('#messages').append($('</br>'));      
-                    window.scrollTo(0, document.body.scrollHeight);
-                    
+                    //Call the scroll function
+                    scroll();
+                                     
+                   
+
                 });
                 
                              
@@ -234,9 +242,19 @@
                     clients.push(user);
                     //update column
                     $("#connected_peeps").append('</br>' + user); 
+                    $("#messages").append('</br><span id="connect_message"><img src="favicon-32x32.png" alt="favicon">' + " " + user + ' has connected.</span></br>'); 
                 } else { return; }
             };
             
+            function scroll() {
+                 //Scroll
+                 $("#messages").scrollTop($("#messages")[0].scrollHeight);
+                    var pass = {msg: message, id: stored_user};
+                    //Weird, I have to have this too
+                    $display = $('#messages');
+                    $display.animate({ scrollTop: $display[0].scrollHeight }, 'fast');
+            }
+
         </script>
 </body>
 </html>

@@ -27,7 +27,10 @@ $(document).ready(function(){
                     $("#current_users").text("Connected Users");
                     //Show the username
                     $("#connected_peeps").append('\n');
-                    $("#connected_peeps").append(res);                     
+                    $("#connected_peeps").append(res);  
+                    //Adjust #connected_peeps to scroll
+                    $("#connected_peeps").css("overflow", "auto");
+                    $("#connected_peeps").css("height", "25em");                   
                     //Incase sessions break, store username here
                     $("#stored_user").append(res);   
                     
@@ -37,6 +40,10 @@ $(document).ready(function(){
                     //Cause the input zone to appear, like magic
                     $(".input_zone").css("visibility", "visible");
                     playWelcome();
+                    //Adjust #messages to scroll
+                    $("#messages").css("overflow", "auto");
+                    $("#messages").css("height", "25em");
+                    
                 }              
             }
         });
@@ -62,6 +69,9 @@ $(document).ready(function(){
                 //Show the username
                 $("#connected_peeps").append('\n');
                 $("#connected_peeps").append(res);  
+                //Adjust #connected_peeps to scroll
+                $("#connected_peeps").css("overflow", "auto");
+                $("#connected_peeps").css("height", "25em");
                 //Incase sessions break, store username here
                 $("#stored_user").append(res);   
                 
@@ -71,6 +81,9 @@ $(document).ready(function(){
                 //Cause the input zone to appear, like magic
                 $(".input_zone").css("visibility", "visible");
                 playWelcome();
+                //Adjust #messages to scroll
+                $("#messages").css("overflow", "auto");
+                $("#messages").css("height", "25em");
             }
         });
         

@@ -30,7 +30,7 @@
    float: left;
    width: 70%;
    padding: 10px;
-   
+   height: 100%;
  }  
  .connection_column {
    float: left;
@@ -38,6 +38,9 @@
    padding: 10px;
    
  } 
+ .row {
+   height: 100%;
+ }
  /* Clear floats after the columns */
  .row:after {
    content: "";
@@ -47,7 +50,7 @@
 
  /* USERS AND CONNECT MESSAGES */
  p, #connect_message  {
-   color: blue;
+   color: green;
    font-weight: bolder;
    font-size: 24px;
  }
@@ -164,7 +167,9 @@
 
  /* SOCKET IO */
  #messages { 
-   list-style-type: none; margin: 0; padding: 0; 
+    /* Filled by jQuery */
+   
+   
   }
  #messages li { 
    padding: 5px 10px; 
