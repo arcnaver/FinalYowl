@@ -31,6 +31,7 @@
    width: 70%;
    padding: 10px;
    height: 100%;
+  
  }  
  .connection_column {
    float: left;
@@ -59,6 +60,10 @@
    color: green;
    font-weight: bolder;
    font-size: 24px;
+ }
+
+ #connected_peeps {
+   visibility: hidden;
  }
 
  #stored_user {
@@ -168,7 +173,7 @@
  /* SOCKET IO */
  #messages { 
     /* Filled by jQuery */
-   
+   visibility: hidden;
    
   }
  #messages li { 

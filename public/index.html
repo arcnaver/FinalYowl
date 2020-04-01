@@ -94,7 +94,7 @@
         </div>
     </div>
     <p id="user_name"></p>
-    <div class="input_zone">
+    <div class="input_zone" id="visible">
         <hr>
         <!-- All of the input stuff goes here -->
         <h1>Message Handler</h1>  
@@ -167,14 +167,22 @@
                     //Check clients and put them on the Connect Users column
                     putUserInArray(msg.id);
 
+                    var visible = inputZoneIsVisible();
+                    console.log("Visible: " + visible);
+                    if (visible == true) {
+                        console.log("Inside post message");
+                        
+                        appendMessage(id, message, time, new_message_audio);
+                    };
                     
-                    //Get the message and put it on the board
-                    $('#messages').append($('<span id="chat_name">').text(id), $('<span id="chat_message"></br>').text(message)
-                        , $('<span id="chat_time">').text(time), ($('</br>')));
-                    //play cute sound https://freesound.org/s/448084/
-                    new_message_audio.play();
-                    //Call the scroll function
-                    scroll();
+                                        
+                    // //Get the message and put it on the board
+                    // $('#messages').append($('<span id="chat_name">').text(id), $('<span id="chat_message"></br>').text(message)
+                    //     , $('<span id="chat_time">').text(time), ($('</br>')));
+                    // //play cute sound https://freesound.org/s/448084/
+                    // new_message_audio.play();
+                    // //Call the scroll function
+                    // scroll();
                                      
                    //TODO:  Make sure if messages is invisible or login form is visible that messages can post. 
 
@@ -182,79 +190,7 @@
                 
                              
             });
-            //JS FUNCTIONS ***********************************
-            //Compare messagage id with stored user's id
-            function compareId(m_id, s_id) {
-                if(m_id != s_id) {
-                    return false;
-                } else {
-                    return true;
-                }
-            };
             
-            //See if user exists in array, if it doesn't put it there. 
-            function putStoredUserInArray(stored_user) {
-                //Check to see if stored_user is already in array
-                var exists = false;
-                for(x in clients){
-                    if(clients[x] == stored_user){
-                    exists = true;
-                    
-                    } else {
-                        exists = false;
-                    }   
-                } 
-                
-                //check to see if its null or undefined
-                if(stored_user != null || stored_user != 'undefined'){
-                    //put stored_user in array
-                    clients.push(stored_user);
-                    stored_user_is_in_array = true;
-                }
-                //Check the array for console
-                clientCheck();
-                
-            };
-                
-            //Check who is in clients[]
-            function clientCheck() {
-                //Now loop through and print out who is in the array
-                for(x in clients){
-                    console.log("Client: " + clients[x] + " is in clients list.");
-                }
-
-            };
-           
-            //Put user in array
-            function putUserInArray(user) {
-                //Check to see if user is already in array
-                var exists = false;
-                for(x in clients){
-                    if(clients[x] == user){
-                    exists = true;
-                    
-                    } else {
-                        exists = false;
-                    }   
-                }
-                //If they're not in there, put them in and update Connected Users column
-                if (exists == false && user != stored_user) {
-                    clients.push(user);
-                    //update column
-                    $("#connected_peeps").append('</br>' + user); 
-                    $("#messages").append('</br><span id="connect_message"><img src="favicon-32x32.png" alt="favicon">' + " " + user + ' has connected.</span></br>'); 
-                } else { return; }
-            };
-            
-            function scroll() {
-                 //Scroll
-                 $("#messages").scrollTop($("#messages")[0].scrollHeight);
-                    var pass = {msg: message, id: stored_user};
-                    //Weird, I have to have this too
-                    $display = $('#messages');
-                    $display.animate({ scrollTop: $display[0].scrollHeight }, 'fast');
-            }
-
         </script>
 </body>
 </html>
