@@ -19,35 +19,8 @@ $(document).ready(function(){
                    $("#password").val("");
                    playError();
                 }else{
-                    //Change the name of the message_pane
-                    $("#message_pane").text("Messages");
-                    //Get rid of the login forms
-                    $("#login_form").remove();
-                    //Show connections column
-                    $("#current_users").text("Connected Users");
-                    //Make it so the Connected Users column shows                    
-                    $("#connected_peeps").css("visibility", "visible");
-                    //Show the username
-                    $("#connected_peeps").append('\n');
-                    $("#connected_peeps").append('</br>' + res);  
-                    //Adjust #connected_peeps to scroll
-                    $("#connected_peeps").css("overflow", "auto");
-                    $("#connected_peeps").css("height", "25em");                   
-                    //Incase sessions break, store username here
-                    $("#stored_user").append(res);   
-                    
-                    //Connection msg
-                    $("#connect_message").append('\n');
-                    $("#connect_message").append('<img src="favicon-32x32.png" alt="favicon"> ' + res + ' has connected.'); 
-                    //Cause the input zone to appear, like magic
-                    $(".input_zone").css("visibility", "visible");
-                    //Make it so messages are visible
-                    $("#messages").css("visibility", "visible");
-                    playWelcome();
-                    //Adjust #messages to scroll
-                    $("#messages").css("overflow", "auto");
-                    $("#messages").css("height", "25em");
-                    
+                    //Set up what the user sees. Remove login, add messages, connections                    
+                    setUpField(res);
                 }              
             }
         });
@@ -64,39 +37,46 @@ $(document).ready(function(){
             url: `/signUp?new_user_name=${$('#new_user_name').val()}&new_password=${$('#new_password').val()}&first_name=${$('#first_name').val()}&last_name=${$('#last_name').val()}`,
             type: "POST",
             success: res => {
-                //Remove login form and reset text
-                $("#login_form").remove();
-                $("#message_pane").text("Messages");
-    
-                //Show connections column
-                $("#current_users").text("Connected Users");
-                //Make it so the Connected Users column shows                    
-                $("#connected_peeps").css("visibility", "visible");
-                //Show the username
-                $("#connected_peeps").append('\n');
-                $("#connected_peeps").append('</br>' + res);  
-                //Adjust #connected_peeps to scroll
-                $("#connected_peeps").css("overflow", "auto");
-                $("#connected_peeps").css("height", "25em");
-                //Incase sessions break, store username here
-                $("#stored_user").append(res);   
+                //Set up what the user sees. Remove login, add messages, connections                    
+                setUpField(res);
                 
-                //Connection msg
-                $("#connect_message").append('\n');
-                $("#connect_message").append('<img src="favicon-32x32.png" alt="favicon"> ' + res + ' has connected.'); 
-                //Cause the input zone to appear, like magic
-                $(".input_zone").css("visibility", "visible");
-                //Make it so messages are visible
-                $("#messages").css("visibility", "visible");
-                playWelcome();
-                //Adjust #messages to scroll
-                $("#messages").css("overflow", "auto");
-                $("#messages").css("height", "25em");
             }
         });
         
     });
 });
+
+//Set up the field of view. Remove login forms, add messages, connections, etc
+function setUpField(res) {
+    //Change the name of the message_pane
+    $("#message_pane").text("Messages");
+    //Get rid of the login forms
+    $("#login_form").remove();
+    //Show connections column
+    $("#current_users").text("Connected Users");
+    //Make it so the Connected Users column shows                    
+    $("#connected_peeps").css("visibility", "visible");
+    //Show the username
+    $("#connected_peeps").append('\n');
+    $("#connected_peeps").append('</br>' + res);  
+    //Adjust #connected_peeps to scroll
+    $("#connected_peeps").css("overflow", "auto");
+    $("#connected_peeps").css("height", "25em");                   
+    //Incase sessions break, store username here
+    $("#stored_user").append(res);   
+    
+    //Connection msg
+    $("#connect_message").append('\n');
+    $("#connect_message").append('<img src="favicon-32x32.png" alt="favicon"> ' + res + ' has connected.'); 
+    //Cause the input zone to appear, like magic
+    $(".input_zone").css("visibility", "visible");
+    //Make it so messages are visible
+    $("#messages").css("visibility", "visible");
+    playWelcome();
+    //Adjust #messages to scroll
+    $("#messages").css("overflow", "auto");
+    $("#messages").css("height", "25em");
+}
 
 //Welcome sound
 function playWelcome() {
