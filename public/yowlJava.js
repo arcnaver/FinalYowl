@@ -119,11 +119,12 @@ function putStoredUserInArray(stored_user) {
         stored_user_is_in_array = true;
     }
     //Check the array for console
-    clientCheck();
+    /*DEBUG ONLY*/
+    //clientCheck();
     
 };
     
-//Check who is in clients[]
+//Check who is in clients[] for DEBUG
 function clientCheck() {
     //Now loop through and print out who is in the array
     for(x in clients){
@@ -165,7 +166,6 @@ function scroll(message) {
 //Check if input zone is set to visible
 function inputZoneIsVisible() {
     var x = document.getElementById("visible");
-    console.log("Computed Visibility: " + window.getComputedStyle(x).visibility);
     if (window.getComputedStyle(x).visibility === "hidden") {
         return false;
     } else {

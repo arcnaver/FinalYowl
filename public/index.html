@@ -162,10 +162,8 @@
                     putUserInArray(msg.id);
 
                     var visible = inputZoneIsVisible();
-                    console.log("Visible: " + visible);
-                    if (visible == true) {
-                        console.log("Inside post message");
-                        
+                    
+                    if (visible == true) {                      
                         appendMessage(id, message, time, new_message_audio);
                     };
                     
